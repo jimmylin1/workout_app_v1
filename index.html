@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home Strength — Workout Tracker</title>
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#ffffff; --ink:#17212b; --muted:#667085; --line:#e5e7eb;
+  --accent:#0f766e; --accent2:#134e4a; --soft:#ecfdf5; --warn:#fff7ed; --danger:#991b1b;
+  --shadow:0 12px 30px rgba(15,23,42,.07); --radius:18px;
+}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padding:18px}.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:16px;margin-bottom:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero-main{padding:26px;background:linear-gradient(135deg,#0f766e,#115e59);color:white;border:none}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;opacity:.8;font-weight:800}.hero h1{font-size:clamp(28px,4vw,48px);line-height:1;margin:8px 0 10px}.hero p{margin:0;opacity:.9;max-width:700px;line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px}.stat{padding:14px;border:1px solid var(--line);border-radius:14px}.stat b{display:block;font-size:25px}.stat span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tab{border:1px solid var(--line);background:white;padding:10px 14px;border-radius:999px;cursor:pointer;font-weight:700}.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.section{display:none}.section.active{display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.pad{padding:18px}.title-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.title-row h2,.title-row h3{margin:0}.muted{color:var(--muted)}.small{font-size:12px}.pill{display:inline-block;padding:6px 9px;border-radius:999px;background:#eef2ff;font-size:12px;font-weight:700}.pill.green{background:var(--soft);color:#065f46}.pill.orange{background:var(--warn);color:#9a3412}
+.schedule{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{padding:12px 8px;text-align:center;border:1px solid var(--line);border-radius:12px;background:#fafafa}.day strong{display:block;font-size:13px}.day span{font-size:11px;color:var(--muted)}.day.strength{background:#ecfdf5;border-color:#a7f3d0}.day.optional{background:#eff6ff;border-color:#bfdbfe}
+.workout-select{display:flex;gap:8px;flex-wrap:wrap}.workout-chip{padding:10px 13px;border:1px solid var(--line);background:white;border-radius:12px;cursor:pointer;font-weight:800}.workout-chip.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(15,118,110,.12)}
+.exercise{border:1px solid var(--line);border-radius:15px;margin:12px 0;overflow:hidden;background:white}.ex-head{padding:14px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;background:#fafafa}.ex-head h3{margin:0 0 4px;font-size:17px}.ex-meta{font-size:12px;color:var(--muted);line-height:1.5}.ex-body{padding:12px 14px}.sets{width:100%;border-collapse:collapse}.sets th,.sets td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.sets th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.sets input{width:78px;padding:8px;border:1px solid #d0d5dd;border-radius:9px}.sets input[type=checkbox]{width:18px;height:18px}.notes{width:100%;min-height:54px;border:1px solid #d0d5dd;border-radius:10px;padding:9px;resize:vertical}.tip{font-size:12px;color:#475467;background:#f8fafc;padding:9px;border-radius:9px;margin-bottom:10px}.last{font-size:12px;color:#065f46;margin-top:5px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:800;cursor:pointer}.btn.primary{background:var(--accent);color:white}.btn.secondary{background:#eef2f6;color:var(--ink)}.btn.danger{background:#fee2e2;color:var(--danger)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.history-item{padding:14px 0;border-bottom:1px solid var(--line)}.history-item:last-child{border-bottom:0}.history-title{display:flex;justify-content:space-between;gap:12px;font-weight:800}.progress-row{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.progress-row.header{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:800}.bar{height:8px;background:#eef2f6;border-radius:99px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}.settings label{display:block;font-size:12px;font-weight:800;margin:11px 0 5px}.settings input,.settings select{width:100%;padding:10px;border:1px solid #d0d5dd;border-radius:10px}.callout{padding:14px;border-radius:13px;background:var(--soft);border:1px solid #a7f3d0;line-height:1.5}.warning{background:var(--warn);border-color:#fed7aa}.footer{font-size:11px;color:var(--muted);padding:20px 4px 30px;line-height:1.5}.timer{font-variant-numeric:tabular-nums;font-size:26px;font-weight:900}.hidden{display:none!important}
+.sync-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fafafa}.sync-status{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}.sync-dot{width:9px;height:9px;border-radius:50%;background:#98a2b3}.sync-dot.ok{background:#12b76a}.sync-dot.busy{background:#f79009}.sync-dot.err{background:#f04438}.sync-actions{display:flex;gap:8px;flex-wrap:wrap}.btn.tiny{padding:7px 10px;font-size:12px}.codeish{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}.help-list{margin:8px 0 0;padding-left:20px;line-height:1.55}
+@media(max-width:800px){.hero,.grid2,.grid3{grid-template-columns:1fr}.schedule{grid-template-columns:repeat(4,1fr)}.ex-head{grid-template-columns:1fr}.progress-row{grid-template-columns:1fr}.sets{display:block;overflow-x:auto}.app{padding:10px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <div class="card hero-main">
+      <div class="eyebrow">Home Strength • 12-week foundation</div>
+      <h1>Build muscle. Track the work.</h1>
+      <p>Three full-body strength sessions in a rolling 7-day window, plus an optional lighter fourth session. Designed around your Inspire BL1, dumbbells, adjustable bench and mat.</p>
+    </div>
+    <div class="card stats">
+      <div class="stat"><b id="bmiStat">24.4</b><span>Current BMI</span></div>
+      <div class="stat"><b id="sessionsStat">0</b><span>Sessions logged</span></div>
+      <div class="stat"><b id="streakStat">0</b><span>Strength sessions / 7d</span></div>
+      <div class="stat"><b>45–55</b><span>Target minutes</span></div>
+    </div>
+  </div>
+
+  <div class="sync-strip">
+    <div class="sync-status"><span class="sync-dot" id="syncDot"></span><span id="syncStatusText">Stored on this device</span></div>
+    <div class="sync-actions"><button class="btn secondary tiny hidden" id="syncNowBtn">Sync now</button><button class="btn secondary tiny" id="cloudSetupBtn" data-tabjump="settings">Google Drive setup</button></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab" data-tab="plan">Plan</button>
+    <button class="tab" data-tab="history">History</button>
+    <button class="tab" data-tab="progress">Progress</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </div>
+
+  <section id="today" class="section active">
+    <div class="grid2">
+      <div class="card pad">
+        <div class="title-row"><div><div class="eyebrow" style="color:var(--accent)">Next session</div><h2 id="nextWorkoutTitle">Workout A</h2></div><span class="pill green" id="readinessPill">Ready</span></div>
+        <p id="nextWorkoutDesc" class="muted"></p>
+        <div class="callout" id="nextAdvice"></div>
+        <div class="actions"><button class="btn primary" id="startNextBtn">Start next workout</button><button class="btn secondary" data-tabjump="plan">View plan</button></div>
+      </div>
+      <div class="card pad">
+        <div class="title-row"><h3>Rolling schedule</h3><span class="small muted">Aim for ≥1 full day between strength days</span></div>
+        <div class="schedule">
+          <div class="day strength"><strong>Day 1</strong><span>Strength A</span></div>
+          <div class="day"><strong>Day 2</strong><span>Run / recovery</span></div>
+          <div class="day strength"><strong>Day 3</strong><span>Strength B</span></div>
+          <div class="day"><strong>Day 4</strong><span>Rest / easy run</span></div>
+          <div class="day strength"><strong>Day 5</strong><span>Strength C</span></div>
+          <div class="day"><strong>Day 6</strong><span>Rest</span></div>
+          <div class="day optional"><strong>Day 7</strong><span>Optional D / run</span></div>
+        </div>
+        <p class="small muted" style="margin-bottom:0">Your 2-mile runs can stay separate. Avoid a hard run immediately before a strength session when possible; if combining them, lift first.</p>
+      </div>
+    </div>
+
+    <div id="sessionPanel" class="card pad hidden" style="margin-top:16px">
+      <div class="title-row"><div><div class="eyebrow" style="color:var(--accent)">Live session</div><h2 id="sessionTitle"></h2></div><div><div class="timer" id="timer">00:00</div><button class="btn secondary small" id="timerBtn">Pause</button></div></div>
+      <div class="callout warning" style="margin-bottom:12px"><strong>Effort target:</strong> finish most working sets with about <strong>2–3 reps in reserve (RIR)</strong>. The final reps should feel challenging, but form should stay clean. During the first 1–2 weeks, treat listed loads as calibration targets, not tests.</div>
+      <div id="exerciseList"></div>
+      <div class="actions"><button class="btn primary" id="finishBtn">Finish & save workout</button><button class="btn secondary" id="cancelBtn">Cancel session</button></div>
+    </div>
+  </section>
+
+  <section id="plan" class="section">
+    <div class="card pad">
+      <div class="title-row"><div><h2>Your program</h2><p class="muted" style="margin:4px 0 0">Cycle A → B → C. D is optional and never replaces recovery.</p></div><span class="pill">Weeks 1–12</span></div>
+      <div class="workout-select" id="workoutSelect"></div>
+      <div id="planDetails"></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card pad"><h3>Progression rule</h3><div class="callout"><strong>Double progression:</strong> stay at the listed load/resistance until you can complete every working set at the top of the rep range with ~2 RIR and clean form. Then increase one step next time: BL1 +1 level when practical; dumbbells move to the next pair, or first add reps/tempo/unilateral difficulty when the 15→25 lb jump is too large.</div></div>
+      <div class="card pad"><h3>Warm-up & rest</h3><p class="muted">Start with 4–5 minutes of easy movement plus one light practice set for the first upper- and lower-body movement. Rest ~90 sec after big movements and 45–75 sec after smaller accessory/core work. Superset paired exercises when noted to stay under an hour.</p></div>
+    </div>
+  </section>
+
+  <section id="history" class="section"><div class="card pad"><div class="title-row"><h2>Workout history</h2><button class="btn secondary" id="exportBtn">Export data</button></div><div id="historyList"></div></div></section>
+  <section id="progress" class="section"><div class="grid2"><div class="card pad"><h2>Exercise progress</h2><div id="progressList"></div></div><div class="card pad"><h2>Body metrics</h2><div id="bodyMetrics"></div><canvas id="weightChart" width="520" height="220" style="width:100%;max-width:100%;margin-top:8px"></canvas></div></div></section>
+  <section id="settings" class="section">
+    <div class="grid2">
+      <div class="card pad settings"><h2>Profile</h2><label>Height (inches)</label><input id="heightInput" type="number" min="48" max="84"><label>Current weight (lb)</label><input id="weightInput" type="number" step="0.1"><label>Primary goal</label><select id="goalInput"><option>Build muscle / body recomposition</option><option>Maintain weight & strength</option><option>Fat loss while preserving muscle</option></select><button class="btn primary" style="margin-top:14px" id="saveSettingsBtn">Save profile</button></div>
+      <div class="card pad settings"><h2>Log body weight</h2><label>Date</label><input id="bodyDate" type="date"><label>Weight (lb)</label><input id="bodyWeight" type="number" step="0.1"><label>Waist (in, optional)</label><input id="bodyWaist" type="number" step="0.1"><button class="btn primary" style="margin-top:14px" id="logBodyBtn">Add measurement</button><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><label>Restore from JSON backup</label><input id="importFile" type="file" accept="application/json,.json"><button class="btn secondary" style="margin-top:10px" id="importBtn">Import backup</button><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><button class="btn danger" id="resetBtn">Reset all app data</button></div>
+    </div>
+    <div class="card pad settings" style="margin-top:16px">
+      <div class="title-row"><div><h2>Google Drive sync</h2><p class="muted" style="margin:4px 0 0">Private cross-device backup using your Google Drive app-data area.</p></div><span class="pill" id="driveStatePill">Not connected</span></div>
+      <div class="callout" id="driveRequirement">This feature requires the tracker to be hosted at an HTTPS web address and a Google OAuth Web Client ID. A local <span class="codeish">file://</span> copy will still work, but Google sign-in will not.</div>
+      <label>Google OAuth Web Client ID</label><input id="googleClientId" class="codeish" placeholder="1234567890-xxxx.apps.googleusercontent.com">
+      <div class="actions"><button class="btn primary" id="connectDriveBtn">Connect Google Drive</button><button class="btn secondary hidden" id="disconnectDriveBtn">Disconnect</button><button class="btn secondary hidden" id="driveSyncBtn">Sync now</button></div>
+      <p class="small muted" id="lastSyncText">No cloud sync yet.</p>
+      <details><summary class="small" style="cursor:pointer;font-weight:800">One-time Google Cloud setup</summary><ol class="help-list small muted"><li>Create or select a Google Cloud project.</li><li>Enable the Google Drive API.</li><li>Configure the OAuth consent screen for your Google account.</li><li>Create an OAuth Client ID of type <strong>Web application</strong>.</li><li>Add the HTTPS address where you host this tracker to <strong>Authorized JavaScript origins</strong>.</li><li>Paste that Client ID above and click <strong>Connect Google Drive</strong>.</li></ol></details>
+    </div>
+  </section>
+
+  <div class="footer">This app is a workout-planning and logging tool, not medical care. Stop exercise for chest pain, unusual shortness of breath, dizziness, or sharp pain. BMI is a screening measure and does not distinguish fat from muscle. Data is always cached in this browser. When Google Drive sync is connected, the app also keeps a private copy in your Drive app-data area. Keep an occasional JSON export as an extra backup.</div>
+</div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+const PROGRAM = {
+ A:{name:'Workout A — Foundation',desc:'Squat + horizontal push/pull + hip hinge. A balanced baseline session.',minutes:'45–55',exercises:[
+  {id:'goblet_squat',name:'Goblet Squat',equip:'Dumbbell',sets:3,min:10,max:12,start:'25 lb',rest:'90 sec',tip:'Hold one 25-lb dumbbell at chest. Sit between the hips, keep knees tracking over toes. If 12 reps are easy at 3+ RIR, use a 3-second lowering phase before adding complexity.'},
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 6',rest:'90 sec',tip:'Set seat/press arms so handles begin around mid-chest. Keep shoulder blades gently set and avoid locking elbows hard.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 6',rest:'90 sec',tip:'Pull bar toward upper chest while keeping ribs controlled. Think elbows down, not hands down.'},
+  {id:'db_rdl',name:'Dumbbell Romanian Deadlift',equip:'2 dumbbells',sets:3,min:10,max:12,start:'25 lb each',rest:'90 sec',tip:'Soft knees, push hips back, keep dumbbells close to legs and spine neutral. Stop when hamstrings are strongly loaded.'},
+  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Bench upright or slightly reclined. Keep ribs down; press without shrugging.'},
+  {id:'dead_bug',name:'Dead Bug',equip:'Mat',sets:2,min:8,max:10,start:'Bodyweight / side',rest:'45 sec',tip:'Keep low back gently against the floor; move slowly. Reps are per side.'}
+ ]},
+ B:{name:'Workout B — Unilateral + Incline',desc:'Single-leg work, incline pressing and rowing to build symmetry and stability.',minutes:'45–55',exercises:[
+  {id:'reverse_lunge',name:'Reverse Lunge',equip:'2 dumbbells',sets:3,min:8,max:10,start:'15 lb each',rest:'90 sec',tip:'Step back far enough to keep front foot planted. Reps are per leg. Start bodyweight if balance limits form.'},
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:8,max:12,start:'Level 6',rest:'90 sec',tip:'Stay tall, pull toward lower ribs, pause briefly, and avoid leaning back to finish the rep.'},
+  {id:'db_incline_press',name:'Incline Dumbbell Bench Press',equip:'Bench + 2 dumbbells',sets:3,min:8,max:12,start:'25 lb each',rest:'90 sec',tip:'Use a low-to-moderate incline. Lower under control with forearms roughly vertical.'},
+  {id:'bl1_leg_ext',name:'BL1 Leg Extension',equip:'BL1 leg extension',sets:2,min:12,max:15,start:'Level 5',rest:'60 sec',tip:'Use a smooth range of motion; avoid swinging. If knees are uncomfortable, reduce resistance/range or substitute goblet squats.'},
+  {id:'one_arm_row',name:'One-Arm Dumbbell Row',equip:'Bench + dumbbell',sets:2,min:10,max:12,start:'25 lb',rest:'60 sec',tip:'Brace on bench and pull toward hip. Reps are per side.'},
+  {id:'lateral_raise',name:'Dumbbell Lateral Raise',equip:'2 dumbbells',sets:2,min:12,max:15,start:'5–10 lb each',rest:'45–60 sec',tip:'Use 5 lb if 10 lb causes swinging. Raise only as high as you can control.'},
+  {id:'front_plank',name:'Front Plank',equip:'Mat',sets:2,min:30,max:45,start:'30–45 sec',rest:'45 sec',tip:'Think ribs toward pelvis and squeeze glutes. Stop before the lower back sags.'}
+ ]},
+ C:{name:'Workout C — Strength + Arms',desc:'A second squat pattern plus chest/back volume, posterior chain and a small arm finisher.',minutes:'45–55',exercises:[
+  {id:'split_squat',name:'Split Squat',equip:'2 dumbbells',sets:3,min:8,max:10,start:'15 lb each',rest:'90 sec',tip:'Use a stable split stance; descend mostly straight down. Reps are per leg. Use bodyweight first if needed.'},
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 6',rest:'90 sec',tip:'Same setup as Workout A. Try to beat the prior session by one total rep before increasing resistance.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 6',rest:'90 sec',tip:'Controlled stretch overhead; no torso swinging.'},
+  {id:'db_rdl',name:'Dumbbell Romanian Deadlift',equip:'2 dumbbells',sets:3,min:10,max:12,start:'25 lb each',rest:'90 sec',tip:'When 25s become easy, use slower 3-second lowering or staggered-stance RDLs before moving to harder variants.'},
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:2,min:10,max:12,start:'Level 5',rest:'60 sec',tip:'Use slightly lighter resistance than Workout B and emphasize a full squeeze.'},
+  {id:'hammer_curl',name:'Dumbbell Hammer Curl',equip:'2 dumbbells',sets:2,min:10,max:15,start:'10–15 lb each',rest:'45 sec',tip:'Keep elbows close to torso. Pair with triceps pressdowns.'},
+  {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:10,max:15,start:'Level 4',rest:'45 sec',tip:'Keep upper arms still and extend at the elbow. Pair with hammer curls.'},
+  {id:'side_plank',name:'Side Plank',equip:'Mat',sets:2,min:20,max:40,start:'20–40 sec / side',rest:'45 sec',tip:'Keep hips stacked. Time is per side.'}
+ ]},
+ D:{name:'Workout D — Optional Pump',desc:'A lighter 30–40 minute session. Do it only when recovered; skip it if running or life stress makes recovery tight.',minutes:'30–40',optional:true,exercises:[
+  {id:'goblet_squat',name:'Goblet Squat',equip:'Dumbbell',sets:2,min:12,max:15,start:'25 lb',rest:'60 sec',tip:'Stay 3 RIR; this is extra volume, not a max-effort day.'},
+  {id:'db_incline_press',name:'Incline Dumbbell Bench Press',equip:'Bench + 2 dumbbells',sets:2,min:12,max:15,start:'15–25 lb each',rest:'60 sec',tip:'Choose a load that leaves 3 reps in reserve.'},
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:2,min:12,max:15,start:'Level 4–5',rest:'60 sec',tip:'Smooth reps and full control.'},
+  {id:'lateral_raise',name:'Dumbbell Lateral Raise',equip:'2 dumbbells',sets:2,min:12,max:15,start:'5–10 lb each',rest:'45 sec',tip:'No swinging; stop short of shoulder discomfort.'},
+  {id:'hammer_curl',name:'Dumbbell Hammer Curl',equip:'2 dumbbells',sets:2,min:12,max:15,start:'10 lb each',rest:'45 sec',tip:'Pair with triceps pressdowns.'},
+  {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:12,max:15,start:'Level 3–4',rest:'45 sec',tip:'Keep it easy enough to recover quickly.'},
+  {id:'dead_bug',name:'Dead Bug',equip:'Mat',sets:2,min:8,max:10,start:'Bodyweight / side',rest:'45 sec',tip:'Slow, controlled reps.'}
+ ]}
+};
+const KEY='homeStrengthTracker_v1';
+const CLOUD_FILE='home-strength-workout-data.json';
+const CLOUD_SCOPE='https://www.googleapis.com/auth/drive.appdata';
+const CONFIG_KEY='homeStrengthTracker_googleConfig_v1';
+const PRE_CLOUD_BACKUP_KEY='homeStrengthTracker_preCloudBackup_v1';
+const defaultState={profile:{height:70,weight:170,goal:'Build muscle / body recomposition'},history:[],body:[{date:new Date().toISOString().slice(0,10),weight:170,waist:null}],next:'A',meta:{updatedAt:new Date().toISOString(),version:2}};
+let state=load(); let activePlan='A'; let session=null; let timerInt=null; let elapsed=0;
+let cloud={token:null,fileId:null,busy:false,connected:false,lastSync:null,syncTimer:null};
+function normalizeState(x){let v={...structuredClone(defaultState),...(x||{})};v.profile={...defaultState.profile,...(x?.profile||{})};v.history=Array.isArray(x?.history)?x.history:[];v.body=Array.isArray(x?.body)?x.body:structuredClone(defaultState.body);v.meta={...defaultState.meta,...(x?.meta||{})};return v}
+function load(){try{return normalizeState(JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return structuredClone(defaultState)}}
+function localSave({cloudSync=true}={}){state.meta=state.meta||{};state.meta.updatedAt=new Date().toISOString();state.meta.version=2;localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(cloudSync&&cloud.connected)scheduleCloudSync()}
+function save(){localSave()}
+function bmi(weight=state.profile.weight,height=state.profile.height){return weight*703/(height*height)}
+function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
+function renderStats(){document.getElementById('bmiStat').textContent=bmi().toFixed(1);document.getElementById('sessionsStat').textContent=state.history.length;let cutoff=Date.now()-7*864e5;document.getElementById('streakStat').textContent=state.history.filter(h=>new Date(h.date).getTime()>=cutoff && ['A','B','C','D'].includes(h.workout)).length}
+function lastWorkout(){return state.history[0]||null}
+function renderToday(){let key=state.next||'A',w=PROGRAM[key];document.getElementById('nextWorkoutTitle').textContent=w.name;document.getElementById('nextWorkoutDesc').textContent=`${w.minutes} min • ${w.exercises.length} movements • full body`;
+ let last=lastWorkout(), advice='You can train when you feel recovered. Keep at least one full recovery day between strength sessions when practical.'; let ready='Ready';
+ if(last){let hrs=(Date.now()-new Date(last.savedAt||last.date).getTime())/36e5;if(hrs<24){advice='You logged a strength session less than 24 hours ago. Recovery is the better choice today; an easy walk or your normal easy run is fine if you feel good.';ready='Recovery'}else if(hrs<40){advice='You are in the recovery window. If soreness is mild and energy is good, waiting until roughly 36–48 hours after the last strength workout is a sensible default.';ready='Recovering'}}
+ document.getElementById('nextAdvice').textContent=advice;document.getElementById('readinessPill').textContent=ready}
+function exerciseLast(id){for(let h of state.history){let e=h.exercises.find(x=>x.id===id);if(e)return e}return null}
+function renderPlan(){let sel=document.getElementById('workoutSelect');sel.innerHTML='';Object.keys(PROGRAM).forEach(k=>{let b=document.createElement('button');b.className='workout-chip '+(k===activePlan?'active':'');b.textContent=`${k}${PROGRAM[k].optional?' (optional)':''}`;b.onclick=()=>{activePlan=k;renderPlan()};sel.appendChild(b)});let w=PROGRAM[activePlan];let html=`<div class="title-row" style="margin-top:18px"><div><h2>${w.name}</h2><p class="muted">${w.desc}</p></div><span class="pill green">${w.minutes} min</span></div>`;
+ w.exercises.forEach((e,i)=>{let last=exerciseLast(e.id);html+=`<div class="exercise"><div class="ex-head"><div><h3>${i+1}. ${e.name}</h3><div class="ex-meta">${e.equip} • ${e.sets} sets × ${e.min}–${e.max} ${e.max>20?'sec':'reps'} • Start: <strong>${e.start}</strong> • Rest: ${e.rest}</div>${last?`<div class="last">Last logged: ${summarizeEx(last)}</div>`:''}</div><span class="pill">${e.id.includes('plank')||e.id==='dead_bug'?'Core': e.id.includes('squat')||e.id.includes('lunge')||e.id.includes('rdl')||e.id.includes('leg_ext')?'Lower':'Upper'}</span></div><div class="ex-body"><div class="tip">${e.tip}</div></div></div>`});document.getElementById('planDetails').innerHTML=html}
+function summarizeEx(e){let done=e.setData.filter(s=>s.done);if(!done.length)return 'no completed sets';return done.map(s=>`${s.load||'—'} × ${s.reps||'—'}`).join(', ')}
+function startSession(key){let w=PROGRAM[key];session={workout:key,date:new Date().toISOString().slice(0,10),startedAt:new Date().toISOString(),exercises:w.exercises.map(e=>({...e,setData:Array.from({length:e.sets},()=>({reps:'',load:e.start,rir:'2',done:false})),notes:''}))};elapsed=0;document.getElementById('sessionPanel').classList.remove('hidden');document.getElementById('sessionTitle').textContent=w.name;renderSession();startTimer();document.getElementById('sessionPanel').scrollIntoView({behavior:'smooth'})}
+function renderSession(){let box=document.getElementById('exerciseList');box.innerHTML='';session.exercises.forEach((e,ei)=>{let last=exerciseLast(e.id);let d=document.createElement('div');d.className='exercise';d.innerHTML=`<div class="ex-head"><div><h3>${ei+1}. ${e.name}</h3><div class="ex-meta">Target ${e.sets} × ${e.min}–${e.max} • ${e.start} • ${e.rest} rest</div>${last?`<div class="last">Previous: ${summarizeEx(last)}</div>`:''}</div><span class="pill">${e.equip}</span></div><div class="ex-body"><div class="tip">${e.tip}</div><table class="sets"><thead><tr><th>Set</th><th>Load / BL1 level</th><th>Reps / sec</th><th>RIR</th><th>Done</th></tr></thead><tbody>${e.setData.map((s,si)=>`<tr><td>${si+1}</td><td><input data-e="${ei}" data-s="${si}" data-f="load" value="${escapeHtml(s.load)}"></td><td><input type="number" min="0" data-e="${ei}" data-s="${si}" data-f="reps" value="${escapeHtml(s.reps)}"></td><td><input type="number" min="0" max="10" data-e="${ei}" data-s="${si}" data-f="rir" value="${escapeHtml(s.rir)}"></td><td><input type="checkbox" data-e="${ei}" data-s="${si}" data-f="done" ${s.done?'checked':''}></td></tr>`).join('')}</tbody></table><label class="small muted">Notes</label><textarea class="notes" data-note="${ei}" placeholder="Form cues, pain, how it felt, setup changes…">${escapeHtml(e.notes)}</textarea></div>`;box.appendChild(d)});
+ box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{let s=session.exercises[+inp.dataset.e].setData[+inp.dataset.s];s[inp.dataset.f]=inp.dataset.f==='done'?inp.checked:inp.value});box.querySelectorAll('textarea').forEach(t=>t.oninput=()=>session.exercises[+t.dataset.note].notes=t.value)}
+function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function startTimer(){clearInterval(timerInt);let started=Date.now()-elapsed*1000;timerInt=setInterval(()=>{elapsed=Math.floor((Date.now()-started)/1000);drawTimer()},1000)}function drawTimer(){let m=String(Math.floor(elapsed/60)).padStart(2,'0'),s=String(elapsed%60).padStart(2,'0');document.getElementById('timer').textContent=`${m}:${s}`}
+function finishSession(){if(!session)return;session.durationSec=elapsed;session.savedAt=new Date().toISOString();state.history.unshift(session);if(session.workout==='A')state.next='B';else if(session.workout==='B')state.next='C';else if(session.workout==='C')state.next='A'; // optional D does not change sequence
+ clearInterval(timerInt);session=null;document.getElementById('sessionPanel').classList.add('hidden');save();alert('Workout saved. Nice work — recovery starts now.')}
+function renderHistory(){let el=document.getElementById('historyList');if(!state.history.length){el.innerHTML='<p class="muted">No workouts logged yet. Your first completed session will appear here.</p>';return}el.innerHTML=state.history.map((h,idx)=>`<div class="history-item"><div class="history-title"><span>${PROGRAM[h.workout]?.name||h.workout}</span><span>${fmtDate(h.date)}</span></div><div class="small muted">${Math.round((h.durationSec||0)/60)} min • ${h.exercises.reduce((n,e)=>n+e.setData.filter(s=>s.done).length,0)} completed sets</div><details style="margin-top:8px"><summary class="small" style="cursor:pointer">View details</summary>${h.exercises.map(e=>`<div class="small" style="padding:6px 0"><strong>${e.name}:</strong> ${summarizeEx(e)}${e.notes?` — ${escapeHtml(e.notes)}`:''}</div>`).join('')}<button class="btn danger small" onclick="deleteHistory(${idx})" style="margin-top:8px">Delete session</button></details></div>`).join('')}
+window.deleteHistory=function(i){if(confirm('Delete this logged session?')){state.history.splice(i,1);save()}}
+function renderProgress(){let map={};state.history.slice().reverse().forEach(h=>h.exercises.forEach(e=>{let done=e.setData.filter(s=>s.done && s.reps);if(done.length){if(!map[e.id])map[e.id]={name:e.name,first:null,last:null};let rec={date:h.date,total:done.reduce((a,s)=>a+(+s.reps||0),0),load:done[0].load};if(!map[e.id].first)map[e.id].first=rec;map[e.id].last=rec}}));let arr=Object.values(map);document.getElementById('progressList').innerHTML=arr.length?`<div class="progress-row header"><span>Exercise</span><span>Latest</span><span>Trend</span></div>`+arr.map(x=>{let pct=x.first&&x.first.total?Math.min(100,Math.round(x.last.total/x.first.total*70)):70;return `<div class="progress-row"><span><strong>${x.name}</strong><div class="bar"><i style="width:${pct}%"></i></div></span><span>${x.last.load}<br><span class="muted">${x.last.total} total reps</span></span><span>${x.first&&x.last.total>x.first.total?'↑ more reps':'→ building history'}</span></div>`}).join(''):'<p class="muted">Complete workouts to build exercise trends.</p>';
+ let b=state.body||[];let latest=b[b.length-1];document.getElementById('bodyMetrics').innerHTML=latest?`<div class="grid3"><div class="stat"><b>${latest.weight}</b><span>Latest lb</span></div><div class="stat"><b>${bmi(latest.weight).toFixed(1)}</b><span>BMI</span></div><div class="stat"><b>${latest.waist||'—'}</b><span>Waist in</span></div></div><p class="small muted">At 5'10", 170 lb corresponds to BMI ≈24.4. Use scale weight together with waist, photos, fit of clothes and strength trends; BMI alone cannot tell muscle from fat.</p>`:'';drawWeightChart()}
+function drawWeightChart(){let c=document.getElementById('weightChart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);let b=(state.body||[]).slice(-12);if(b.length<2){ctx.font='14px sans-serif';ctx.fillText('Add 2+ body-weight entries to see a trend.',18,40);return}let vals=b.map(x=>+x.weight),min=Math.min(...vals)-2,max=Math.max(...vals)+2,pad=35;ctx.strokeStyle='#d0d5dd';ctx.beginPath();ctx.moveTo(pad,10);ctx.lineTo(pad,c.height-pad);ctx.lineTo(c.width-10,c.height-pad);ctx.stroke();ctx.strokeStyle='#0f766e';ctx.lineWidth=3;ctx.beginPath();b.forEach((x,i)=>{let px=pad+i*((c.width-pad-15)/(b.length-1)),py=10+(max-x.weight)*(c.height-pad-20)/(max-min);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.stroke();ctx.fillStyle='#667085';ctx.font='11px sans-serif';ctx.fillText(`${max.toFixed(1)} lb`,2,16);ctx.fillText(`${min.toFixed(1)} lb`,2,c.height-pad)}
+function renderSettings(){heightInput.value=state.profile.height;weightInput.value=state.profile.weight;goalInput.value=state.profile.goal;bodyDate.value=new Date().toISOString().slice(0,10);bodyWeight.value=state.profile.weight;let cfg=getGoogleConfig();googleClientId.value=cfg.clientId||'';renderCloudStatus()}
+function getGoogleConfig(){try{return JSON.parse(localStorage.getItem(CONFIG_KEY)||'{}')}catch(e){return {}}}
+function setGoogleConfig(cfg){localStorage.setItem(CONFIG_KEY,JSON.stringify(cfg||{}))}
+function setCloudUi(kind,text){let dot=document.getElementById('syncDot'),txt=document.getElementById('syncStatusText');if(dot){dot.className='sync-dot '+(kind||'');txt.textContent=text}}
+function renderCloudStatus(){let connected=cloud.connected&&!!cloud.token;driveStatePill.textContent=connected?'Connected':'Not connected';driveStatePill.className='pill '+(connected?'green':'');connectDriveBtn.classList.toggle('hidden',connected);disconnectDriveBtn.classList.toggle('hidden',!connected);driveSyncBtn.classList.toggle('hidden',!connected);syncNowBtn.classList.toggle('hidden',!connected);cloudSetupBtn.classList.toggle('hidden',connected);lastSyncText.textContent=cloud.lastSync?`Last synced ${new Date(cloud.lastSync).toLocaleString()}`:'No cloud sync yet.';if(connected)setCloudUi(cloud.busy?'busy':'ok',cloud.busy?'Syncing with Google Drive…':(cloud.lastSync?'Google Drive synced':'Google Drive connected'));else setCloudUi('', 'Stored on this device')}
+function waitForGoogleIdentity(ms=8000){return new Promise((resolve,reject)=>{let start=Date.now();let t=setInterval(()=>{if(window.google?.accounts?.oauth2){clearInterval(t);resolve()}else if(Date.now()-start>ms){clearInterval(t);reject(new Error('Google Identity Services did not load. Check your internet connection and reload.'))}},100)})}
+async function connectDrive(){if(location.protocol==='file:')return alert('Google sign-in cannot run reliably from a file:// page. Host this HTML at an HTTPS address first, then open that hosted version. Your local tracker will continue to work meanwhile.');let clientId=googleClientId.value.trim();if(!clientId)return alert('Paste your Google OAuth Web Client ID first.');setGoogleConfig({clientId});try{await waitForGoogleIdentity();setCloudUi('busy','Opening Google authorization…');let tokenClient=google.accounts.oauth2.initTokenClient({client_id:clientId,scope:CLOUD_SCOPE,callback:async resp=>{if(resp.error){setCloudUi('err','Google authorization failed');return alert('Google authorization failed: '+resp.error)}cloud.token=resp.access_token;cloud.connected=true;renderCloudStatus();try{await reconcileCloud()}catch(e){console.error(e);setCloudUi('err','Drive sync error');alert('Connected to Google, but sync failed: '+e.message)}}});tokenClient.requestAccessToken({prompt:'consent'})}catch(e){setCloudUi('err','Google sign-in unavailable');alert(e.message)}}
+function disconnectDrive(){cloud.token=null;cloud.fileId=null;cloud.connected=false;cloud.lastSync=null;renderCloudStatus()}
+async function driveFetch(url,opts={}){let r=await fetch(url,{...opts,headers:{Authorization:`Bearer ${cloud.token}`,...(opts.headers||{})}});if(r.status===401){cloud.connected=false;cloud.token=null;renderCloudStatus();throw new Error('Google authorization expired. Click Connect Google Drive again.')}if(!r.ok){let t=await r.text();throw new Error(`Google Drive ${r.status}: ${t.slice(0,240)}`)}return r}
+async function findCloudFile(){let q=encodeURIComponent(`name='${CLOUD_FILE}' and trashed=false`);let r=await driveFetch(`https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=${q}&fields=files(id,name,modifiedTime)&pageSize=10`);let j=await r.json();let f=(j.files||[]).sort((a,b)=>String(b.modifiedTime).localeCompare(String(a.modifiedTime)))[0];cloud.fileId=f?.id||null;return f||null}
+async function downloadCloudState(){if(!cloud.fileId)return null;let r=await driveFetch(`https://www.googleapis.com/drive/v3/files/${cloud.fileId}?alt=media`);return normalizeState(await r.json())}
+async function createCloudFile(){let boundary='-------homeStrength'+Date.now();let metadata={name:CLOUD_FILE,parents:['appDataFolder'],mimeType:'application/json'};let body=`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(state)}\r\n--${boundary}--`;let r=await driveFetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',{method:'POST',headers:{'Content-Type':`multipart/related; boundary=${boundary}`},body});let j=await r.json();cloud.fileId=j.id;return j.id}
+async function uploadCloudState(){if(!cloud.token)return;cloud.busy=true;renderCloudStatus();try{if(!cloud.fileId)await findCloudFile();if(!cloud.fileId)await createCloudFile();else await driveFetch(`https://www.googleapis.com/upload/drive/v3/files/${cloud.fileId}?uploadType=media`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(state)});cloud.lastSync=new Date().toISOString();renderCloudStatus()}finally{cloud.busy=false;renderCloudStatus()}}
+async function reconcileCloud(){cloud.busy=true;renderCloudStatus();try{let f=await findCloudFile();if(!f){await uploadCloudState();return}let remote=await downloadCloudState();let lt=Date.parse(state.meta?.updatedAt||0)||0,rt=Date.parse(remote.meta?.updatedAt||0)||0;if(rt>lt){localStorage.setItem(PRE_CLOUD_BACKUP_KEY,JSON.stringify(state));state=remote;localStorage.setItem(KEY,JSON.stringify(state));renderAll();cloud.lastSync=new Date().toISOString();setCloudUi('ok','Loaded newer data from Google Drive')}else if(lt>rt){await uploadCloudState()}else{cloud.lastSync=new Date().toISOString();setCloudUi('ok','Google Drive synced')}}finally{cloud.busy=false;renderCloudStatus()}}
+function scheduleCloudSync(){clearTimeout(cloud.syncTimer);cloud.syncTimer=setTimeout(()=>uploadCloudState().catch(e=>{console.error(e);setCloudUi('err','Drive sync failed')}),900)}
+
+function renderAll(){renderStats();renderToday();renderPlan();renderHistory();renderProgress();renderSettings()}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));document.querySelectorAll('[data-tabjump]').forEach(b=>b.onclick=()=>switchTab(b.dataset.tabjump));function switchTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===id));if(id==='progress')renderProgress()}
+startNextBtn.onclick=()=>startSession(state.next||'A');finishBtn.onclick=finishSession;cancelBtn.onclick=()=>{if(confirm('Cancel without saving this workout?')){clearInterval(timerInt);session=null;sessionPanel.classList.add('hidden')}};let paused=false;timerBtn.onclick=()=>{paused=!paused;if(paused){clearInterval(timerInt);timerBtn.textContent='Resume'}else{startTimer();timerBtn.textContent='Pause'}};
+saveSettingsBtn.onclick=()=>{state.profile.height=+heightInput.value||70;state.profile.weight=+weightInput.value||170;state.profile.goal=goalInput.value;save();alert('Profile saved.')};
+logBodyBtn.onclick=()=>{let w=+bodyWeight.value;if(!w)return alert('Enter a weight.');state.body=state.body||[];state.body.push({date:bodyDate.value||new Date().toISOString().slice(0,10),weight:w,waist:bodyWaist.value?+bodyWaist.value:null});state.body.sort((a,b)=>a.date.localeCompare(b.date));state.profile.weight=w;save();alert('Measurement added.')};
+exportBtn.onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='home-strength-workout-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+importBtn.onclick=()=>{let f=importFile.files?.[0];if(!f)return alert('Choose a JSON backup file first.');let r=new FileReader();r.onload=()=>{try{let incoming=normalizeState(JSON.parse(r.result));if(!confirm(`Import this backup with ${incoming.history.length} logged workout(s)? It will replace the data currently on this device${cloud.connected?' and sync the imported data to Drive':''}.`))return;state=incoming;save();alert('Backup imported.')}catch(e){alert('That file does not look like a valid workout backup.')}};r.readAsText(f)};
+connectDriveBtn.onclick=connectDrive;disconnectDriveBtn.onclick=disconnectDrive;driveSyncBtn.onclick=()=>reconcileCloud().catch(e=>{setCloudUi('err','Drive sync failed');alert(e.message)});syncNowBtn.onclick=driveSyncBtn.onclick;
+resetBtn.onclick=()=>{if(confirm('Reset all workouts and measurements? This cannot be undone unless you exported a backup.')){localStorage.removeItem(KEY);state=structuredClone(defaultState);save()}};
+renderAll();
+</script>
+</body>
+</html>
