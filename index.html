@@ -51,7 +51,7 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
     <div class="card hero-main">
       <div class="eyebrow">Home Strength • 12-week progressive program</div>
       <h1>Build muscle. Track the work.</h1>
-      <p>Three full-body strength sessions in a rolling 7-day window, plus an optional lighter fourth session. Designed around your Inspire BL1, dumbbells, adjustable bench and mat.</p>
+      <p>Four focused strength sessions in a rolling 7-day cycle: Upper A → Lower A → recovery → Upper B → Lower B → recovery → rest. A two-week experiment designed around your Inspire BL1, dumbbells, adjustable bench and mat.</p>
     </div>
     <div class="card stats">
       <div class="stat"><b id="bmiStat">24.4</b><span>Current BMI</span></div>
@@ -77,31 +77,31 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
   <section id="today" class="section active">
     <div class="grid2">
       <div class="card pad">
-        <div class="title-row"><div><div class="eyebrow" style="color:var(--accent)">Next session</div><h2 id="nextWorkoutTitle">Workout A</h2></div><span class="pill green" id="readinessPill">Ready</span></div>
+        <div class="title-row"><div><div class="eyebrow" style="color:var(--accent)">Next session</div><h2 id="nextWorkoutTitle">Upper A</h2></div><span class="pill green" id="readinessPill">Ready</span></div>
         <p id="nextWorkoutDesc" class="muted"></p>
         <div class="callout" id="nextAdvice"></div>
-        <div class="actions"><button class="btn primary" id="startNextBtn">Start next workout</button><button class="btn secondary" id="startDBtn">Start optional Workout D</button><button class="btn secondary" id="pastWorkoutBtn">Log past workout</button><button class="btn secondary" data-tabjump="plan">View plan</button></div>
+        <div class="actions"><button class="btn primary" id="startNextBtn">Start next workout</button><button class="btn secondary" id="pastWorkoutBtn">Log past workout</button><button class="btn secondary" data-tabjump="plan">View plan</button></div>
         <div class="past-log hidden" id="pastWorkoutPanel">
           <div class="row">
-            <div><label>Workout</label><select id="pastWorkoutType"><option value="A">Workout A</option><option value="B">Workout B</option><option value="C">Workout C</option><option value="D">Workout D (optional)</option></select></div>
+            <div><label>Workout</label><select id="pastWorkoutType"><optgroup label="Current upper / lower experiment"><option value="UA">Upper A</option><option value="LA">Lower A</option><option value="UB">Upper B</option><option value="LB">Lower B</option></optgroup><optgroup label="Previous full-body phase"><option value="A">Workout A</option><option value="B">Workout B</option><option value="C">Workout C</option><option value="D">Workout D (optional)</option></optgroup></select></div>
             <div><label>Date completed</label><input id="pastWorkoutDate" type="date"></div>
             <button class="btn primary" id="startPastWorkoutBtn">Start logging</button>
           </div>
-          <p class="small muted" style="margin:8px 0 0">Backfilled workouts are inserted by workout date and do not change which A/B/C session is next.</p>
+          <p class="small muted" style="margin:8px 0 0">Backfilled workouts are inserted by workout date and do not change which upper/lower session is next. Previous A/B/C/D workouts remain available for historical entries.</p>
         </div>
       </div>
       <div class="card pad">
-        <div class="title-row"><h3>Rolling schedule</h3><span class="small muted">Aim for ≥1 full day between strength days</span></div>
+        <div class="title-row"><h3>7-day split</h3><span class="small muted">Repeat for 2 weeks, then reassess</span></div>
         <div class="schedule">
-          <div class="day strength"><strong>Day 1</strong><span>Strength A</span></div>
-          <div class="day"><strong>Day 2</strong><span>Run / recovery</span></div>
-          <div class="day strength"><strong>Day 3</strong><span>Strength B</span></div>
-          <div class="day"><strong>Day 4</strong><span>Rest / easy run</span></div>
-          <div class="day strength"><strong>Day 5</strong><span>Strength C</span></div>
-          <div class="day"><strong>Day 6</strong><span>Rest</span></div>
-          <div class="day optional"><strong>Day 7</strong><span>Optional D / run</span></div>
+          <div class="day strength"><strong>Day 1</strong><span>Upper A</span></div>
+          <div class="day strength"><strong>Day 2</strong><span>Lower A</span></div>
+          <div class="day"><strong>Day 3</strong><span>Run / recovery</span></div>
+          <div class="day strength"><strong>Day 4</strong><span>Upper B</span></div>
+          <div class="day strength"><strong>Day 5</strong><span>Lower B</span></div>
+          <div class="day"><strong>Day 6</strong><span>Run / recovery</span></div>
+          <div class="day"><strong>Day 7</strong><span>Rest</span></div>
         </div>
-        <p class="small muted" style="margin-bottom:0">Your 2-mile runs can stay separate. Avoid a hard run immediately before a strength session when possible; if combining them, lift first.</p>
+        <p class="small muted" style="margin-bottom:0">Upper → lower can be done on consecutive days because the primary muscle groups alternate. After each lower session, use the next day for recovery or an easy 2-mile run. If your legs feel unusually heavy, move the run to an upper-body day instead.</p>
       </div>
     </div>
 
@@ -115,13 +115,13 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
 
   <section id="plan" class="section">
     <div class="card pad">
-      <div class="title-row"><div><h2>Your program</h2><p class="muted" style="margin:4px 0 0">Cycle A → B → C. D is optional and never replaces recovery.</p></div><span class="pill">Weeks 1–12</span></div>
+      <div class="title-row"><div><h2>Your program</h2><p class="muted" style="margin:4px 0 0">For the next two weeks: Upper A → Lower A → recovery → Upper B → Lower B → recovery → rest, then repeat.</p></div><span class="pill">2-week experiment</span></div>
       <div class="workout-select" id="workoutSelect"></div>
       <div id="planDetails"></div>
     </div>
     <div class="grid2" style="margin-top:16px">
       <div class="card pad"><h3>Progression rule</h3><div class="callout"><strong>Double progression:</strong> stay at the listed load/resistance until you can complete every working set at the top of the rep range with ~2 RIR and clean form. Then increase one step next time: BL1 +1 level when practical; dumbbells move to the next pair, or first add reps/tempo/unilateral difficulty when the 15→25 lb jump is too large.</div></div>
-      <div class="card pad"><h3>Warm-up & rest</h3><p class="muted">Start with 4–5 minutes of easy movement plus one light practice set for the first upper- and lower-body movement. Rest ~90 sec after big movements and 45–75 sec after smaller accessory/core work. Superset paired exercises when noted to stay under an hour.</p></div>
+      <div class="card pad"><h3>Warm-up & rest</h3><p class="muted">Start with 4–5 minutes of easy movement plus one light practice set for the first major movement. On upper days, pair push/pull or arm accessories when convenient; on lower days, keep the first three movements as straight sets. Rest ~90 sec after big movements and 45–75 sec after accessories/core work.</p></div>
     </div>
   </section>
 
@@ -147,6 +147,41 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 const PROGRAM = {
+ UA:{name:'Upper A — Press + Pull',focus:'Upper body',desc:'Balanced upper-body hypertrophy with your heavier chest, pulldown and row prescriptions.',minutes:'45–55',exercises:[
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Use Level 8 for all working sets. Keep shoulder blades gently set. When you reach 12/12/12 at ~2 RIR with clean form, progress to Level 9.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Pull toward the upper chest with a controlled stretch overhead and no torso swinging. Progress after 12/12/12 at ~2 RIR.'},
+  {id:'db_incline_press',name:'Incline Dumbbell Bench Press',equip:'Bench + 2 dumbbells',sets:3,min:8,max:12,start:'25 lb each',rest:'90 sec',tip:'Use a low-to-moderate incline with a 3-second lowering phase and a brief controlled pause near the bottom.'},
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:8,max:12,start:'Level 9',rest:'90 sec',tip:'This is your heavier row exposure. Stay tall, pull toward the lower ribs and avoid leaning back to finish reps.'},
+  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Use a 3-second lowering phase. Keep ribs down and press without shrugging.'},
+  {id:'lateral_raise',name:'Dumbbell Lateral Raise',equip:'2 dumbbells',sets:2,min:10,max:15,start:'10 lb each',rest:'45–60 sec',tip:'Use strict reps with no swinging or shrugging. Drop to 5 lb if control breaks down.'},
+  {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:10,max:15,start:'Level 5',rest:'45 sec',tip:'Keep upper arms still. Build toward 15/15 at Level 5, then progress to Level 6.'}
+ ]},
+ LA:{name:'Lower A — Squat + Hinge',focus:'Lower body',desc:'Primary lower-body strength day: squat, hinge, unilateral work and direct quad/core volume.',minutes:'45–55',exercises:[
+  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Hold one dumbbell at each shoulder. Keep the torso tall and control the descent. Build toward 12/12/12 before increasing difficulty.'},
+  {id:'db_rdl',name:'Dumbbell Romanian Deadlift',equip:'2 dumbbells',sets:3,min:10,max:12,start:'25 lb each',rest:'90 sec',tip:'Use a 3-second lowering phase. Keep knees soft, push hips back and keep the dumbbells close to your legs.'},
+  {id:'reverse_lunge',name:'Reverse Lunge',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Reps are per leg. Use a controlled 3-second descent and keep the front foot planted.'},
+  {id:'bl1_leg_ext',name:'BL1 Leg Extension',equip:'BL1 leg extension',sets:2,min:12,max:15,start:'Level 6',rest:'60 sec',tip:'Use a smooth range of motion and no swinging. Stop or reduce range if your knees are uncomfortable.'},
+  {id:'db_calf_raise',name:'Standing Dumbbell Calf Raise',equip:'2 dumbbells',sets:2,min:12,max:20,start:'25 lb each',rest:'45–60 sec',tip:'Hold the dumbbells at your sides. Use a full stretch at the bottom, rise onto the balls of your feet and pause briefly at the top.'},
+  {id:'dead_bug',name:'Dead Bug',equip:'Mat',sets:2,min:8,max:10,start:'Bodyweight / side',rest:'45 sec',tip:'Reps are per side. Extend slowly with a full exhale while keeping the lower back gently pressed into the floor.'}
+ ]},
+ UB:{name:'Upper B — Back + Arms',focus:'Upper body',desc:'Second upper-body exposure with controlled rowing, repeat chest/back volume and direct arm work.',minutes:'45–55',exercises:[
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:10,max:12,start:'Level 8',rest:'75–90 sec',tip:'Use Level 8 as the controlled-volume row. Pause for 1 second at full contraction and emphasize the squeeze.'},
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Use Level 8. Add clean reps over time; move to Level 9 after 12/12/12 at ~2 RIR.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Controlled stretch overhead, elbows down toward the ribs, no torso swinging.'},
+  {id:'one_arm_row',name:'One-Arm Dumbbell Row',equip:'Bench + dumbbell',sets:2,min:10,max:12,start:'25 lb',rest:'60 sec',tip:'Reps are per side. Brace firmly, pull toward the hip, pause at the top and lower slowly. Stop if torso rotation takes over.'},
+  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Use a 3-second lowering phase and keep the torso stable.'},
+  {id:'hammer_curl',name:'Dumbbell Hammer Curl',equip:'2 dumbbells',sets:2,min:10,max:15,start:'15 lb each',rest:'45 sec',tip:'Keep elbows close to the torso and use strict reps. Pair with triceps pressdowns to save time.'},
+  {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:10,max:15,start:'Level 5',rest:'45 sec',tip:'Keep upper arms still. Pair with hammer curls; progress after 15/15 at clean ~2 RIR.'}
+ ]},
+ LB:{name:'Lower B — Unilateral + Posterior',focus:'Lower body',desc:'Second lower-body exposure with unilateral legs, direct hamstrings, lighter squat volume and core.',minutes:'40–50',exercises:[
+  {id:'split_squat',name:'Split Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Reps are per leg. Keep a stable split stance and descend mostly straight down. Build toward 12/12/12 before increasing load.'},
+  {id:'bl1_leg_curl',name:'BL1 Leg Curl',equip:'BL1 leg curl station',sets:3,min:10,max:15,start:'Level 4',rest:'60–75 sec',tip:'New movement: treat Level 4 as a calibration starting point. Use smooth reps and choose a level that leaves ~2–3 RIR; adjust up immediately if Level 4 is clearly too easy.'},
+  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'75–90 sec',tip:'This is lighter secondary squat volume. Keep 2–3 RIR and prioritize clean depth and control.'},
+  {id:'single_leg_glute_bridge',name:'Single-Leg Glute Bridge',equip:'Mat',sets:2,min:10,max:15,start:'Bodyweight / side',rest:'60 sec',tip:'Reps are per side. Drive through the heel, keep the pelvis level and pause for 1 second at the top.'},
+  {id:'db_calf_raise',name:'Standing Dumbbell Calf Raise',equip:'2 dumbbells',sets:2,min:12,max:20,start:'25 lb each',rest:'45–60 sec',tip:'Use a full stretch at the bottom and a brief pause at the top. Keep the movement controlled.'},
+  {id:'side_plank',name:'Side Plank',equip:'Mat',sets:2,min:30,max:40,start:'30–40 sec / side',rest:'45 sec',tip:'Keep hips stacked and ribs controlled. Time is per side.'}
+ ]},
+ // Previous full-body prescriptions retained so historical A/B/C/D sessions and backfilling remain intact.
  A:{name:'Workout A — Foundation',desc:'Squat + horizontal push/pull + hip hinge. A balanced baseline session.',minutes:'45–55',exercises:[
   {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Hold one dumbbell at each shoulder. Sit between the hips with knees tracking over toes. Keep your torso tall and control the descent. Build to 12/12/12 with clean form before increasing difficulty.'},
   {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Use Level 8 for all working sets. Keep shoulder blades gently set and avoid locking elbows hard. When you reach 12/12/12 at ~2 RIR with clean form, progress to Level 9.'},
@@ -184,15 +219,16 @@ const PROGRAM = {
   {id:'dead_bug',name:'Dead Bug',equip:'Mat',sets:2,min:8,max:10,start:'Bodyweight / side',rest:'45 sec',tip:'Slow, controlled reps.'}
  ]}
 };
+const CURRENT_KEYS=['UA','LA','UB','LB'];
 const KEY='homeStrengthTracker_v1';
 const CLOUD_FILE='home-strength-workout-data.json';
 const CLOUD_SCOPE='https://www.googleapis.com/auth/drive.appdata';
 const CONFIG_KEY='homeStrengthTracker_googleConfig_v1';
 const PRE_CLOUD_BACKUP_KEY='homeStrengthTracker_preCloudBackup_v1';
-const defaultState={profile:{height:70,weight:170,goal:'Build muscle / body recomposition'},history:[],body:[{date:new Date().toISOString().slice(0,10),weight:170,waist:null}],next:'A',meta:{updatedAt:new Date().toISOString(),version:2}};
-let state=load(); let activePlan='A'; let session=null; let timerInt=null; let elapsed=0;
+const defaultState={profile:{height:70,weight:170,goal:'Build muscle / body recomposition'},history:[],body:[{date:new Date().toISOString().slice(0,10),weight:170,waist:null}],next:'UA',meta:{updatedAt:new Date().toISOString(),version:2}};
+let state=load(); let activePlan='UA'; let session=null; let timerInt=null; let elapsed=0;
 let cloud={token:null,fileId:null,busy:false,connected:false,lastSync:null,syncTimer:null};
-function normalizeState(x){let v={...structuredClone(defaultState),...(x||{})};v.profile={...defaultState.profile,...(x?.profile||{})};v.history=Array.isArray(x?.history)?x.history:[];v.history.sort((a,b)=>(Date.parse((b.date||'')+'T23:59:59')||0)-(Date.parse((a.date||'')+'T23:59:59')||0) || String(b.savedAt||'').localeCompare(String(a.savedAt||'')));v.body=Array.isArray(x?.body)?x.body:structuredClone(defaultState.body);v.meta={...defaultState.meta,...(x?.meta||{})};return v}
+function normalizeState(x){let v={...structuredClone(defaultState),...(x||{})};v.profile={...defaultState.profile,...(x?.profile||{})};v.history=Array.isArray(x?.history)?x.history:[];v.history.sort((a,b)=>(Date.parse((b.date||'')+'T23:59:59')||0)-(Date.parse((a.date||'')+'T23:59:59')||0) || String(b.savedAt||'').localeCompare(String(a.savedAt||'')));v.body=Array.isArray(x?.body)?x.body:structuredClone(defaultState.body);v.meta={...defaultState.meta,...(x?.meta||{})};if(!CURRENT_KEYS.includes(v.next))v.next='UA';return v}
 function load(){try{return normalizeState(JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return structuredClone(defaultState)}}
 function localSave({cloudSync=true}={}){state.meta=state.meta||{};state.meta.updatedAt=new Date().toISOString();state.meta.version=2;localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(cloudSync&&cloud.connected)scheduleCloudSync()}
 function save(){localSave()}
@@ -207,15 +243,15 @@ function renderToday(){let key=state.next||'A',w=PROGRAM[key];document.getElemen
  if(last){let hrs=(Date.now()-new Date(last.savedAt||last.date).getTime())/36e5;if(hrs<24){advice='You logged a strength session less than 24 hours ago. Recovery is the better choice today; an easy walk or your normal easy run is fine if you feel good.';ready='Recovery'}else if(hrs<40){advice='You are in the recovery window. If soreness is mild and energy is good, waiting until roughly 36–48 hours after the last strength workout is a sensible default.';ready='Recovering'}}
  document.getElementById('nextAdvice').textContent=advice;document.getElementById('readinessPill').textContent=ready}
 function exerciseLast(id,beforeDate=null){let hist=[...state.history].sort((a,b)=>historyTime(b)-historyTime(a));for(let h of hist){if(beforeDate && h.date>=beforeDate)continue;let e=h.exercises.find(x=>x.id===id);if(e)return e}return null}
-function renderPlan(){let sel=document.getElementById('workoutSelect');sel.innerHTML='';Object.keys(PROGRAM).forEach(k=>{let b=document.createElement('button');b.className='workout-chip '+(k===activePlan?'active':'');b.textContent=`${k}${PROGRAM[k].optional?' (optional)':''}`;b.onclick=()=>{activePlan=k;renderPlan()};sel.appendChild(b)});let w=PROGRAM[activePlan];let html=`<div class="title-row" style="margin-top:18px"><div><h2>${w.name}</h2><p class="muted">${w.desc}</p></div><span class="pill green">${w.minutes} min</span></div>`;
- w.exercises.forEach((e,i)=>{let last=exerciseLast(e.id);html+=`<div class="exercise"><div class="ex-head"><div><h3>${i+1}. ${e.name}</h3><div class="ex-meta">${e.equip} • ${e.sets} sets × ${e.min}–${e.max} ${e.max>20?'sec':'reps'} • Start: <strong>${e.start}</strong> • Rest: ${e.rest}</div>${last?`<div class="last">Last logged: ${summarizeEx(last)}</div>`:''}</div><span class="pill">${e.id.includes('plank')||e.id==='dead_bug'?'Core': e.id.includes('squat')||e.id.includes('lunge')||e.id.includes('rdl')||e.id.includes('leg_ext')?'Lower':'Upper'}</span></div><div class="ex-body"><div class="tip">${e.tip}</div></div></div>`});document.getElementById('planDetails').innerHTML=html}
+function renderPlan(){let sel=document.getElementById('workoutSelect');sel.innerHTML='';CURRENT_KEYS.forEach(k=>{let b=document.createElement('button');b.className='workout-chip '+(k===activePlan?'active':'');b.textContent=PROGRAM[k].name.split(' — ')[0];b.onclick=()=>{activePlan=k;renderPlan()};sel.appendChild(b)});let w=PROGRAM[activePlan];let html=`<div class="title-row" style="margin-top:18px"><div><h2>${w.name}</h2><p class="muted">${w.desc}</p></div><span class="pill green">${w.minutes} min</span></div>`;
+ w.exercises.forEach((e,i)=>{let last=exerciseLast(e.id);html+=`<div class="exercise"><div class="ex-head"><div><h3>${i+1}. ${e.name}</h3><div class="ex-meta">${e.equip} • ${e.sets} sets × ${e.min}–${e.max} ${e.max>20?'sec':'reps'} • Start: <strong>${e.start}</strong> • Rest: ${e.rest}</div>${last?`<div class="last">Last logged: ${summarizeEx(last)}</div>`:''}</div><span class="pill">${e.id.includes('plank')||e.id==='dead_bug'?'Core': e.id.includes('squat')||e.id.includes('lunge')||e.id.includes('rdl')||e.id.includes('leg_')||e.id.includes('calf')||e.id.includes('glute')?'Lower':'Upper'}</span></div><div class="ex-body"><div class="tip">${e.tip}</div></div></div>`});document.getElementById('planDetails').innerHTML=html}
 function summarizeEx(e){let done=e.setData.filter(s=>s.done);if(!done.length)return 'no completed sets';return done.map(s=>`${s.load||'—'} × ${s.reps||'—'}`).join(', ')}
 function startSession(key,opts={}){let w=PROGRAM[key],isPast=!!opts.past,date=opts.date||new Date().toISOString().slice(0,10);session={workout:key,date,startedAt:isPast?null:new Date().toISOString(),isPast,exercises:w.exercises.map(e=>({...e,setData:Array.from({length:e.sets},()=>({reps:'',load:e.start,rir:'',done:false})),notes:''}))};elapsed=0;document.getElementById('sessionPanel').classList.remove('hidden');document.getElementById('sessionTitle').textContent=w.name;document.getElementById('sessionEyebrow').textContent=isPast?'Past workout entry':'Live session';document.getElementById('sessionDateLabel').textContent=(isPast?'Completed ':'Today • ')+fmtDate(date);document.getElementById('timerWrap').classList.toggle('hidden',isPast);renderSession();if(isPast){clearInterval(timerInt);drawTimer()}else startTimer();document.getElementById('sessionPanel').scrollIntoView({behavior:'smooth'})}
 function renderSession(){let box=document.getElementById('exerciseList');box.innerHTML='';session.exercises.forEach((e,ei)=>{let last=exerciseLast(e.id,session.isPast?session.date:null);let d=document.createElement('div');d.className='exercise';d.innerHTML=`<div class="ex-head"><div><h3>${ei+1}. ${e.name}</h3><div class="ex-meta">Target ${e.sets} × ${e.min}–${e.max} • ${e.start} • ${e.rest} rest</div>${last?`<div class="last">Previous: ${summarizeEx(last)}</div>`:''}</div><span class="pill">${e.equip}</span></div><div class="ex-body"><div class="tip">${e.tip}</div><table class="sets"><thead><tr><th>Set</th><th>Load / BL1 level</th><th>Reps / sec</th><th>RIR</th><th>Done</th></tr></thead><tbody>${e.setData.map((s,si)=>`<tr><td>${si+1}</td><td><input data-e="${ei}" data-s="${si}" data-f="load" value="${escapeHtml(s.load)}"></td><td><input type="number" min="0" data-e="${ei}" data-s="${si}" data-f="reps" value="${escapeHtml(s.reps)}"></td><td><input type="number" min="0" max="10" data-e="${ei}" data-s="${si}" data-f="rir" value="${escapeHtml(s.rir)}"></td><td><input type="checkbox" data-e="${ei}" data-s="${si}" data-f="done" ${s.done?'checked':''}></td></tr>`).join('')}</tbody></table><label class="small muted">Notes</label><textarea class="notes" data-note="${ei}" placeholder="Form cues, pain, how it felt, setup changes…">${escapeHtml(e.notes)}</textarea></div>`;box.appendChild(d)});
  box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{let s=session.exercises[+inp.dataset.e].setData[+inp.dataset.s];s[inp.dataset.f]=inp.dataset.f==='done'?inp.checked:inp.value});box.querySelectorAll('textarea').forEach(t=>t.oninput=()=>session.exercises[+t.dataset.note].notes=t.value)}
 function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 function startTimer(){clearInterval(timerInt);let started=Date.now()-elapsed*1000;timerInt=setInterval(()=>{elapsed=Math.floor((Date.now()-started)/1000);drawTimer()},1000)}function drawTimer(){let m=String(Math.floor(elapsed/60)).padStart(2,'0'),s=String(elapsed%60).padStart(2,'0');document.getElementById('timer').textContent=`${m}:${s}`}
-function finishSession(){if(!session)return;let wasPast=!!session.isPast;session.durationSec=wasPast?0:elapsed;session.savedAt=new Date().toISOString();delete session.isPast;state.history.push(session);sortHistory();if(!wasPast){if(session.workout==='A')state.next='B';else if(session.workout==='B')state.next='C';else if(session.workout==='C')state.next='A';} // optional D and backfilled workouts do not change sequence
+function finishSession(){if(!session)return;let wasPast=!!session.isPast;session.durationSec=wasPast?0:elapsed;session.savedAt=new Date().toISOString();delete session.isPast;state.history.push(session);sortHistory();if(!wasPast){if(session.workout==='UA')state.next='LA';else if(session.workout==='LA')state.next='UB';else if(session.workout==='UB')state.next='LB';else if(session.workout==='LB')state.next='UA';} // backfilled workouts do not change the active upper/lower sequence
  clearInterval(timerInt);session=null;document.getElementById('sessionPanel').classList.add('hidden');save();alert(wasPast?'Past workout saved and inserted by date.':'Workout saved. Nice work — recovery starts now.')}
 function renderHistory(){let el=document.getElementById('historyList');if(!state.history.length){el.innerHTML='<p class="muted">No workouts logged yet. Your first completed session will appear here.</p>';return}el.innerHTML=state.history.map((h,idx)=>`<div class="history-item"><div class="history-title"><span>${PROGRAM[h.workout]?.name||h.workout}</span><span>${fmtDate(h.date)}</span></div><div class="small muted">${Math.round((h.durationSec||0)/60)} min • ${h.exercises.reduce((n,e)=>n+e.setData.filter(s=>s.done).length,0)} completed sets</div><details style="margin-top:8px"><summary class="small" style="cursor:pointer">View details</summary>${h.exercises.map(e=>`<div class="small" style="padding:6px 0"><strong>${e.name}:</strong> ${summarizeEx(e)}${e.notes?` — ${escapeHtml(e.notes)}`:''}</div>`).join('')}<button class="btn danger small" onclick="deleteHistory(${idx})" style="margin-top:8px">Delete session</button></details></div>`).join('')}
 window.deleteHistory=function(i){if(confirm('Delete this logged session?')){state.history.splice(i,1);save()}}
@@ -240,7 +276,7 @@ function scheduleCloudSync(){clearTimeout(cloud.syncTimer);cloud.syncTimer=setTi
 
 function renderAll(){renderStats();renderToday();renderPlan();renderHistory();renderProgress();renderSettings()}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));document.querySelectorAll('[data-tabjump]').forEach(b=>b.onclick=()=>switchTab(b.dataset.tabjump));function switchTab(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===id));if(id==='progress')renderProgress()}
-startNextBtn.onclick=()=>startSession(state.next||'A');startDBtn.onclick=()=>startSession('D');pastWorkoutBtn.onclick=()=>{pastWorkoutPanel.classList.toggle('hidden');if(!pastWorkoutDate.value){let d=new Date();d.setDate(d.getDate()-1);pastWorkoutDate.value=d.toISOString().slice(0,10)}};startPastWorkoutBtn.onclick=()=>{let d=pastWorkoutDate.value;if(!d)return alert('Choose the date the workout was completed.');if(d>new Date().toISOString().slice(0,10))return alert('Past workout date cannot be in the future.');startSession(pastWorkoutType.value,{past:true,date:d});pastWorkoutPanel.classList.add('hidden')};finishBtn.onclick=finishSession;cancelBtn.onclick=()=>{if(confirm('Cancel without saving this workout?')){clearInterval(timerInt);session=null;sessionPanel.classList.add('hidden')}};let paused=false;timerBtn.onclick=()=>{paused=!paused;if(paused){clearInterval(timerInt);timerBtn.textContent='Resume'}else{startTimer();timerBtn.textContent='Pause'}};
+startNextBtn.onclick=()=>startSession(CURRENT_KEYS.includes(state.next)?state.next:'UA');pastWorkoutBtn.onclick=()=>{pastWorkoutPanel.classList.toggle('hidden');if(!pastWorkoutDate.value){let d=new Date();d.setDate(d.getDate()-1);pastWorkoutDate.value=d.toISOString().slice(0,10)}};startPastWorkoutBtn.onclick=()=>{let d=pastWorkoutDate.value;if(!d)return alert('Choose the date the workout was completed.');if(d>new Date().toISOString().slice(0,10))return alert('Past workout date cannot be in the future.');startSession(pastWorkoutType.value,{past:true,date:d});pastWorkoutPanel.classList.add('hidden')};finishBtn.onclick=finishSession;cancelBtn.onclick=()=>{if(confirm('Cancel without saving this workout?')){clearInterval(timerInt);session=null;sessionPanel.classList.add('hidden')}};let paused=false;timerBtn.onclick=()=>{paused=!paused;if(paused){clearInterval(timerInt);timerBtn.textContent='Resume'}else{startTimer();timerBtn.textContent='Pause'}};
 saveSettingsBtn.onclick=()=>{state.profile.height=+heightInput.value||70;state.profile.weight=+weightInput.value||170;state.profile.goal=goalInput.value;save();alert('Profile saved.')};
 logBodyBtn.onclick=()=>{let w=+bodyWeight.value;if(!w)return alert('Enter a weight.');state.body=state.body||[];state.body.push({date:bodyDate.value||new Date().toISOString().slice(0,10),weight:w,waist:bodyWaist.value?+bodyWaist.value:null});state.body.sort((a,b)=>a.date.localeCompare(b.date));state.profile.weight=w;save();alert('Measurement added.')};
 exportBtn.onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='home-strength-workout-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
