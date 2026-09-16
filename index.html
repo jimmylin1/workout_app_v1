@@ -91,7 +91,7 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
         </div>
       </div>
       <div class="card pad">
-        <div class="title-row"><h3>7-day split</h3><span class="small muted">Repeat for 2 weeks, then reassess</span></div>
+        <div class="title-row"><h3>7-day split</h3><span class="small muted">Continue 3 more weeks, then reassess</span></div>
         <div class="schedule">
           <div class="day strength"><strong>Day 1</strong><span>Upper A</span></div>
           <div class="day strength"><strong>Day 2</strong><span>Lower A</span></div>
@@ -115,7 +115,7 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
 
   <section id="plan" class="section">
     <div class="card pad">
-      <div class="title-row"><div><h2>Your program</h2><p class="muted" style="margin:4px 0 0">For the next two weeks: Upper A → Lower A → recovery → Upper B → Lower B → recovery → rest, then repeat.</p></div><span class="pill">2-week experiment</span></div>
+      <div class="title-row"><div><h2>Your program</h2><p class="muted" style="margin:4px 0 0">For the next three weeks: Upper A → Lower A → recovery → Upper B → Lower B → recovery → rest, then repeat.</p></div><span class="pill">3-week progression</span></div>
       <div class="workout-select" id="workoutSelect"></div>
       <div id="planDetails"></div>
     </div>
@@ -147,36 +147,36 @@ button,input,select,textarea{font:inherit}.app{max-width:1180px;margin:auto;padd
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 const PROGRAM = {
- UA:{name:'Upper A — Press + Pull',focus:'Upper body',desc:'Balanced upper-body hypertrophy with your heavier chest, pulldown and row prescriptions.',minutes:'45–55',exercises:[
-  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Use Level 8 for all working sets. Keep shoulder blades gently set. When you reach 12/12/12 at ~2 RIR with clean form, progress to Level 9.'},
-  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Pull toward the upper chest with a controlled stretch overhead and no torso swinging. Progress after 12/12/12 at ~2 RIR.'},
-  {id:'db_incline_press',name:'Incline Dumbbell Bench Press',equip:'Bench + 2 dumbbells',sets:3,min:8,max:12,start:'25 lb each',rest:'90 sec',tip:'Use a low-to-moderate incline with a 3-second lowering phase and a brief controlled pause near the bottom.'},
-  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:8,max:12,start:'Level 9',rest:'90 sec',tip:'This is your heavier row exposure. Stay tall, pull toward the lower ribs and avoid leaning back to finish reps.'},
-  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Use a 3-second lowering phase. Keep ribs down and press without shrugging.'},
-  {id:'lateral_raise',name:'Dumbbell Lateral Raise',equip:'2 dumbbells',sets:2,min:10,max:15,start:'10 lb each',rest:'45–60 sec',tip:'Use strict reps with no swinging or shrugging. Drop to 5 lb if control breaks down.'},
+ UA:{name:'Upper A — Press + Pull',focus:'Upper body',desc:'Careful chest-press progression plus heavier pulldown and controlled rowing. Keep most sets near 2 RIR.',minutes:'45–55',exercises:[
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:10,start:'Level 9',rest:'90–120 sec',tip:'Carefully test Level 9 for 3 sets of 8–10 with clean form and about 2 reps left. If it feels too heavy, use Level 8 for remaining sets; do not force the jump.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 9',rest:'90 sec',tip:'Use Level 9 across working sets if controlled. Pull to upper chest without swinging or leaning back; return to Level 8 if range or form shortens.'},
+  {id:'db_incline_press',name:'Incline Dumbbell Bench Press',equip:'Bench + 2 dumbbells',sets:3,min:8,max:12,start:'25 lb each',rest:'90 sec',tip:'25 lb each: strictly use a 3-second lowering phase plus brief pause near the bottom on EVERY rep. Target 10–12 quality reps, not 15+ faster reps.'},
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:10,max:12,start:'Level 9',rest:'90–120 sec',tip:'Stay at Level 9 until all 3 sets reach 12 reps with ~2 RIR. Do not jump to Level 10 or chase failure; stay tall and avoid body swing.'},
+  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Stay at 15 lb each; use a consistent 3-second lowering phase. Build strict 10–12 reps without shrugging; avoid the large jump to 25s.'},
+  {id:'lateral_raise',name:'Dumbbell Lateral Raise',equip:'2 dumbbells',sets:2,min:10,max:12,start:'10 lb each',rest:'60 sec',tip:'Aim for 10–12 clean reps. Stop before swinging or shrugging; use 5 lb instead if needed to preserve shoulder position.'},
   {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:10,max:15,start:'Level 5',rest:'45 sec',tip:'Keep upper arms still. Build toward 15/15 at Level 5, then progress to Level 6.'}
  ]},
- LA:{name:'Lower A — Squat + Hinge',focus:'Lower body',desc:'Primary lower-body strength day: squat, hinge, unilateral work and direct quad/core volume.',minutes:'45–55',exercises:[
-  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Hold one dumbbell at each shoulder. Keep the torso tall and control the descent. Build toward 12/12/12 before increasing difficulty.'},
-  {id:'db_rdl',name:'Dumbbell Romanian Deadlift',equip:'2 dumbbells',sets:3,min:10,max:12,start:'25 lb each',rest:'90 sec',tip:'Use a 3-second lowering phase. Keep knees soft, push hips back and keep the dumbbells close to your legs.'},
-  {id:'reverse_lunge',name:'Reverse Lunge',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Reps are per leg. Use a controlled 3-second descent and keep the front foot planted.'},
+ LA:{name:'Lower A — Squat + Hinge',focus:'Lower body',desc:'Controlled front squat, kickstand hip hinge and manageable unilateral work; prioritize technique over extra reps.',minutes:'45–55',exercises:[
+  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'15 lb each with 3-second descent, 1-second pause near the bottom, then stand. Aim 3 × 10–12 with clean depth; only consider 25s after mastering this tempo.'},
+  {id:'kickstand_rdl',name:'Kickstand Dumbbell Romanian Deadlift',equip:'2 dumbbells',sets:2,min:8,max:12,start:'15 lb each (calibrate)',rest:'90–120 sec',tip:'NEW variation: one foot slightly back as a kickstand; most weight on the front leg. Do 8–12 reps PER SIDE, hips square, soft front knee and neutral back. Begin with 10–15 lb each, then work toward 25s only when balanced and controlled.'},
+  {id:'reverse_lunge',name:'Reverse Lunge',equip:'2 dumbbells',sets:3,min:10,max:10,start:'15 lb each',rest:'120 sec',tip:'10 reps PER LEG with controlled descent and stable front foot. Rest up to 2 minutes between demanding sets. Stop with ~2 RIR rather than going to failure; do not jump to 25s yet.'},
   {id:'bl1_leg_ext',name:'BL1 Leg Extension',equip:'BL1 leg extension',sets:2,min:12,max:15,start:'Level 6',rest:'60 sec',tip:'Use a smooth range of motion and no swinging. Stop or reduce range if your knees are uncomfortable.'},
   {id:'db_calf_raise',name:'Standing Dumbbell Calf Raise',equip:'2 dumbbells',sets:2,min:12,max:20,start:'25 lb each',rest:'45–60 sec',tip:'Hold the dumbbells at your sides. Use a full stretch at the bottom, rise onto the balls of your feet and pause briefly at the top.'},
   {id:'dead_bug',name:'Dead Bug',equip:'Mat',sets:2,min:8,max:10,start:'Bodyweight / side',rest:'45 sec',tip:'Reps are per side. Extend slowly with a full exhale while keeping the lower back gently pressed into the floor.'}
  ]},
- UB:{name:'Upper B — Back + Arms',focus:'Upper body',desc:'Second upper-body exposure with controlled rowing, repeat chest/back volume and direct arm work.',minutes:'45–55',exercises:[
-  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:10,max:12,start:'Level 8',rest:'75–90 sec',tip:'Use Level 8 as the controlled-volume row. Pause for 1 second at full contraction and emphasize the squeeze.'},
-  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Use Level 8. Add clean reps over time; move to Level 9 after 12/12/12 at ~2 RIR.'},
-  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Controlled stretch overhead, elbows down toward the ribs, no torso swinging.'},
+ UB:{name:'Upper B — Back + Arms',focus:'Upper body',desc:'Controlled row volume, Level 8 chest press, heavier pulldowns and arm accessories.',minutes:'45–55',exercises:[
+  {id:'bl1_row',name:'BL1 Seated / Low Row',equip:'BL1 low cable',sets:3,min:10,max:12,start:'Level 8',rest:'75–90 sec',tip:'Level 8 for all working sets. Pause 1 second fully contracted and control the return; use Level 9 only on Upper A for now.'},
+  {id:'bl1_chest_press',name:'BL1 Chest Press',equip:'BL1',sets:3,min:8,max:12,start:'Level 8',rest:'90 sec',tip:'Maintain Level 8 as the controlled chest-press exposure. Aim 3 × 8–12 with ~2 RIR, avoiding failure; Level 9 is the optional test on Upper A.'},
+  {id:'bl1_lat_pulldown',name:'BL1 Lat Pulldown',equip:'BL1 + lat bar',sets:3,min:8,max:12,start:'Level 9',rest:'90 sec',tip:'Level 9 for controlled 8–12 reps. Keep a full range and avoid torso swing; switch to Level 8 if form deteriorates.'},
   {id:'one_arm_row',name:'One-Arm Dumbbell Row',equip:'Bench + dumbbell',sets:2,min:10,max:12,start:'25 lb',rest:'60 sec',tip:'Reps are per side. Brace firmly, pull toward the hip, pause at the top and lower slowly. Stop if torso rotation takes over.'},
-  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'Use a 3-second lowering phase and keep the torso stable.'},
+  {id:'db_shoulder_press',name:'Seated Dumbbell Shoulder Press',equip:'Bench + dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'60–75 sec',tip:'15 lb each with 3-second lowering, 10–12 strict reps. No need to jump directly to 25-lb dumbbells.'},
   {id:'hammer_curl',name:'Dumbbell Hammer Curl',equip:'2 dumbbells',sets:2,min:10,max:15,start:'15 lb each',rest:'45 sec',tip:'Keep elbows close to the torso and use strict reps. Pair with triceps pressdowns to save time.'},
   {id:'triceps_pressdown',name:'BL1 Triceps Pressdown',equip:'BL1 high cable',sets:2,min:10,max:15,start:'Level 5',rest:'45 sec',tip:'Keep upper arms still. Pair with hammer curls; progress after 15/15 at clean ~2 RIR.'}
  ]},
- LB:{name:'Lower B — Unilateral + Posterior',focus:'Lower body',desc:'Second lower-body exposure with unilateral legs, direct hamstrings, lighter squat volume and core.',minutes:'40–50',exercises:[
-  {id:'split_squat',name:'Split Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'90 sec',tip:'Reps are per leg. Keep a stable split stance and descend mostly straight down. Build toward 12/12/12 before increasing load.'},
-  {id:'bl1_leg_curl',name:'BL1 Leg Curl',equip:'BL1 leg curl station',sets:3,min:10,max:15,start:'Level 4',rest:'60–75 sec',tip:'New movement: treat Level 4 as a calibration starting point. Use smooth reps and choose a level that leaves ~2–3 RIR; adjust up immediately if Level 4 is clearly too easy.'},
-  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'75–90 sec',tip:'This is lighter secondary squat volume. Keep 2–3 RIR and prioritize clean depth and control.'},
+ LB:{name:'Lower B — Unilateral + Posterior',focus:'Lower body',desc:'Unilateral legs with adequate rest, calibrated leg curls, controlled front squats and core.',minutes:'40–50',exercises:[
+  {id:'split_squat',name:'Split Squat',equip:'2 dumbbells',sets:3,min:10,max:12,start:'15 lb each',rest:'120 sec',tip:'Reps PER LEG. Rest up to 2 minutes between difficult sets, aim near 2 RIR and build toward 12/12/12 without reaching failure. Keep 15s for now.'},
+  {id:'bl1_leg_curl',name:'BL1 Leg Curl',equip:'BL1 leg curl station',sets:3,min:10,max:12,start:'Level 2',rest:'75–90 sec',tip:'Use Level 2 based on your logged performance. Build 10/10/10 toward 12/12/12 with controlled movement and ~2 RIR before considering Level 3. Level 4 was too heavy as a starting recommendation.'},
+  {id:'db_front_squat',name:'Double-Dumbbell Front Squat',equip:'2 dumbbells',sets:2,min:10,max:12,start:'15 lb each',rest:'75–90 sec',tip:'Keep 15 lb each and do 2 × 10–12 with a controlled 3-second descent and brief bottom pause. Treat as lighter work: 2–3 RIR.'},
   {id:'single_leg_glute_bridge',name:'Single-Leg Glute Bridge',equip:'Mat',sets:2,min:10,max:15,start:'Bodyweight / side',rest:'60 sec',tip:'Reps are per side. Drive through the heel, keep the pelvis level and pause for 1 second at the top.'},
   {id:'db_calf_raise',name:'Standing Dumbbell Calf Raise',equip:'2 dumbbells',sets:2,min:12,max:20,start:'25 lb each',rest:'45–60 sec',tip:'Use a full stretch at the bottom and a brief pause at the top. Keep the movement controlled.'},
   {id:'side_plank',name:'Side Plank',equip:'Mat',sets:2,min:30,max:40,start:'30–40 sec / side',rest:'45 sec',tip:'Keep hips stacked and ribs controlled. Time is per side.'}
@@ -234,11 +234,11 @@ function localSave({cloudSync=true}={}){state.meta=state.meta||{};state.meta.upd
 function save(){localSave()}
 function bmi(weight=state.profile.weight,height=state.profile.height){return weight*703/(height*height)}
 function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
-function renderStats(){document.getElementById('bmiStat').textContent=bmi().toFixed(1);document.getElementById('sessionsStat').textContent=state.history.length;let cutoff=Date.now()-7*864e5;document.getElementById('streakStat').textContent=state.history.filter(h=>new Date(h.date).getTime()>=cutoff && ['A','B','C','D'].includes(h.workout)).length}
+function renderStats(){document.getElementById('bmiStat').textContent=bmi().toFixed(1);document.getElementById('sessionsStat').textContent=state.history.length;let cutoff=Date.now()-7*864e5;document.getElementById('streakStat').textContent=state.history.filter(h=>new Date(h.date).getTime()>=cutoff && ['A','B','C','D','UA','LA','UB','LB'].includes(h.workout)).length}
 function historyTime(h){return Date.parse((h.date||'')+'T23:59:59')||Date.parse(h.savedAt||0)||0}
 function sortHistory(){state.history.sort((a,b)=>historyTime(b)-historyTime(a) || String(b.savedAt||'').localeCompare(String(a.savedAt||'')))}
 function lastWorkout(){if(!state.history.length)return null;return [...state.history].sort((a,b)=>historyTime(b)-historyTime(a))[0]||null}
-function renderToday(){let key=state.next||'A',w=PROGRAM[key];document.getElementById('nextWorkoutTitle').textContent=w.name;document.getElementById('nextWorkoutDesc').textContent=`${w.minutes} min • ${w.exercises.length} movements • full body`;
+function renderToday(){let key=state.next||'A',w=PROGRAM[key];document.getElementById('nextWorkoutTitle').textContent=w.name;document.getElementById('nextWorkoutDesc').textContent=`${w.minutes} min • ${w.exercises.length} movements • ${w.focus||'strength'}`;
  let last=lastWorkout(), advice='You can train when you feel recovered. Keep at least one full recovery day between strength sessions when practical.'; let ready='Ready';
  if(last){let hrs=(Date.now()-new Date(last.savedAt||last.date).getTime())/36e5;if(hrs<24){advice='You logged a strength session less than 24 hours ago. Recovery is the better choice today; an easy walk or your normal easy run is fine if you feel good.';ready='Recovery'}else if(hrs<40){advice='You are in the recovery window. If soreness is mild and energy is good, waiting until roughly 36–48 hours after the last strength workout is a sensible default.';ready='Recovering'}}
  document.getElementById('nextAdvice').textContent=advice;document.getElementById('readinessPill').textContent=ready}
